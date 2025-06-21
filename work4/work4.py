@@ -4,28 +4,42 @@ def parse_input(user_input):
     return cmd, *args
 
 def add_contact(args, contacts):
-    name, phone = args
-    contacts[name] = phone
-    return "Contact added."
+    if len(args) > 1:
+        name, phone = args
+        contacts[name] = phone
+        return "Contact added."
+    else:
+        return "Missing arguments."
 
 def change_contact(args, contacts):
-    name, phone = args
-    contacts[name] = phone
-    return "Contact changed."
+    if len(args) > 1:
+        name, phone = args
+        contacts[name] = phone
+        return "Contact changed."
+    else:
+        return "Missing arguments."
 
 def show_phone(args, contacts):
-    name = args[0]
-    return f"{name}: {contacts.get(name)}"
-
+    if args:
+        name = args[0]
+        if contacts.get(name):
+            return f"{name}: {contacts.get(name)}"
+        else:
+            return "Contact missing."
+    else:
+        return "Missing arguments."
+    
 def main():
     contacts = {}
     print("Welcome to the assistant bot!")
     while True:
         user_input = input("Enter a command: ")
-        command, *args = parse_input(user_input)
+        if user_input:
+            command, *args = parse_input(user_input)
+        else:
+            command = None
 
         if command in ["close", "exit"]:
-            # print(contacts)
             print("Good bye!")
             break
         elif command == "hello":
@@ -37,7 +51,10 @@ def main():
         elif command == "phone":
             print(show_phone(args, contacts))
         elif command == "all":
-            print(contacts)
+            if contacts:
+                print(contacts)
+            else:
+                print("List is empty.")
         else:
             print("Invalid command.")
 
