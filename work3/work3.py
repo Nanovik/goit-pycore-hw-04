@@ -5,7 +5,7 @@ from pathlib import Path
 if len(sys.argv) > 1:
     original_path = Path(sys.argv[1])
 
-    def print_dir (dir, n):
+    def print_dir(dir, n):
         n += 1
         for path in dir.iterdir():
             if path.is_dir():     
